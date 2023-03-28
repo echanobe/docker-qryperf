@@ -1,0 +1,25 @@
+> Create a record.
+
+---------------------------------------------
+
+# cat test.txt
+brpogi.belvyss.com
+
+---------------------------------------------
+ 
+> Then run the following, can be run to multiple containers.
+
+queryperf -s <name server> -d record-br-test.txt -i 20 -l 600 -T 30000
+
+-OR-
+
+queryperf -s <name server> -d /opt/bind-9.10.5-P2/contrib/queryperf/test.txt -i 20 -l 600 -T 30000 
+
+----------------------------------------------
+ 
+-T 30000 = this is the QPS
+-i = 20 seconds – every 20 seconds there will be an output about the stats
+-l = 600 seconds it will run and will stop after 600 seconds
+
+### queryperf -s 10.237.6.70 -d /home/queryperf/guide/record-br-test.txt -i 5 -l 600 -T 50000 -R -e -D -q 20 -c -r 500000 -u 100
+

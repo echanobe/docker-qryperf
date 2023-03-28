@@ -1,0 +1,6 @@
+#Bind Mounting
+docker container run -dit --restart=always --name=br-ib --hostname=br-ib -v C:\Users\i355370\Documents\br-docker-ib:/home/ib --dns=10.33.139.40 --dns=10.33.50.8 echanobe/br-ib
+
+#Volume Mounting
+docker container run -dit --restart=always --name=br-ib --hostname=br-ib --mount src=br-volume,dst=/home/br-folder,readonly --dns=10.33.139.40 --dns=10.33.50.8 echanobe/br-ib
+

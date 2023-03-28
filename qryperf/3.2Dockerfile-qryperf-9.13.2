@@ -1,0 +1,51 @@
+### Take note that if Logging is Enabled, it might cause not to match with the QPS you specified say 20000 qps but you are only getting 8000 qps ###
+### If the queryperf is not getting above 2K or 3K, check the query/response logging and turn it off!!!
+
+### Remember: 
+# Make sure the host sending queries is not a limiting factor.  You may need to send queries from multiple hosts. 
+# Make sure the network is not a limiting factor.  You may need 100Mbps media between the name server and the hosts sending queries. 
+
+
+# docker build -t echanobe/br-qryprf:v2
+# docker image tag ddi-queryperf:latest echanobe/ddi-queryperf:latest
+# docker login
+# docker push echanobe/br-qryprf:v2
+
+ 
+FROM ubuntu
+
+LABEL maintainer="Bel Rey Echano"
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+    iputils-ping \
+    net-tools \
+    iproute2 \
+    traceroute \
+    build-essential \
+    manpages-dev \
+    vim \
+    nano \
+    tar \
+    less \
+    wget \
+    make \
+    tzdata \
+    dnsutils \
+    snmp
+
+RUN  wget http://ftp.isc.org/isc/bind9/9.13.2/bind-9.13.2.tar.gz -P /usr/local/src 
+RUN  cd /usr/local/src && tar xvf bind-9.13.2.tar.gz \
+     && cd /usr/local/src/bind-9.13.2/contrib/queryperf && ./configure && make
+
+RUN cp /usr/local/src/bind-9.13.2/contrib/queryperf/queryperf /usr/bin
+
+RUN mkdir /home/queryperf
+
+COPY guide/ /home/queryperf/guide/
+
+WORKDIR /home/queryperf
+
+
+CMD ["bash"]
