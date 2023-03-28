@@ -1,0 +1,25 @@
+name: Docker Image CI - QRYPRF
+
+on: # These are the Events... name of Github event that triggers the workflow. Everytime there is a push/pull to main branch, we will trigger this workflow.
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3 # Whenever we want to build an application or run tests we need to checkout the code first
+    - name: Build the Docker image
+      run: docker build -t echanobe/br-qryprf:v2 -f 3.2Dockerfile-qryperf-9.13.2 .
+
+    -
+      name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
