@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3 # Whenever we want to build an application or run tests we need to checkout the code first
     - name: Build the Docker image
-      run: docker build -t echanobe/br-qryprf:v2 -f qryperf/3.2Dockerfile-qryperf-9.13.2 .
+      run: docker build -t echanobe/br-qryperf:v2 -f qryperf/3.2Dockerfile-qryperf-9.13.2 .
 
     - name: Push the Docker image
       run: docker push echanobe/br-qryperf:v2
