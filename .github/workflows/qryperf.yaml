@@ -3,10 +3,10 @@ name: ci
 on:
   push:
     branches:
-      - "main"
+      - 'main'
 
 jobs:
-  build:
+  docker:
     runs-on: ubuntu-latest
     steps:
       -
@@ -19,14 +19,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      -
         name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: -f qryperf/3.2Dockerfile-qryperf-9.13.2 .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/qryperf:v2
-
+          tags: echanobe/qryperf:v2
